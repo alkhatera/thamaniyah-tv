@@ -1,6 +1,6 @@
 import { useFocusContext } from '@/ts/contexts/FocusContext';
 import { useMemo } from 'react';
-import { useTVEventHandler, View } from 'react-native';
+import { TVFocusGuideView, useTVEventHandler, View } from 'react-native';
 import MenuItem from './MenuItem';
 
 function Menu() {
@@ -28,7 +28,7 @@ function Menu() {
 	});
 
 	return (
-		<View
+		<TVFocusGuideView
 			style={[
 				{
 					backgroundColor: 'rgba(0,0,0,0.75)',
@@ -65,7 +65,7 @@ function Menu() {
 			{menuItems.map((_, index) => (
 				<MenuItem key={index} index={index} />
 			))}
-		</View>
+		</TVFocusGuideView>
 	);
 }
 

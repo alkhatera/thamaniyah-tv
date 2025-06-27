@@ -67,16 +67,15 @@ function VideoList() {
 	});
 
 	// Auto-scroll to focused item
-	// Commented out because it may cause issues with focus management
-	// useEffect(() => {
-	// 	if (focusedComponent.name === 'moviesList' && flatListRef.current) {
-	// 		flatListRef.current.scrollToIndex({
-	// 			index: focusedComponent.focusedIndex,
-	// 			viewPosition: 0.5, // center the item
-	// 			animated: true,
-	// 		});
-	// 	}
-	// }, [focusedComponent]);
+	useEffect(() => {
+		if (focusedComponent.name === 'moviesList' && flatListRef.current) {
+			flatListRef.current?.scrollToIndex({
+				index: focusedComponent.focusedIndex,
+				viewPosition: 0.5,
+				animated: true,
+			});
+		}
+	}, [focusedComponent.focusedIndex]);
 
 	return (
 		<FlatList
@@ -86,12 +85,12 @@ function VideoList() {
 			keyExtractor={(item, index) => index.toString()}
 			renderItem={({ item, index }) => <GalleryItem title={item.name} image={item.image} index={index} />}
 			showsHorizontalScrollIndicator={false}
-			contentContainerStyle={{ paddingHorizontal: 10, paddingBottom: 20 }}
-			style={{ marginBottom: 50 }}
+			contentContainerStyle={{ paddingHorizontal: 10 }}
 			onScrollToIndexFailed={() => {
 				// Handle the case where the index is out of range
 				console.warn('Index out of range');
 			}}
+			scrollEnabled={false} // Optional: disable native scroll gestures
 		/>
 	);
 }

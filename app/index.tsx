@@ -3,23 +3,41 @@ import Menu from '@/components/Menu';
 import VideoList from '@/components/VideoList';
 import { Colors } from '@/constants/Colors';
 import useBackHandler from '@/hooks/useBackHandler';
-import { Image, SafeAreaView, ScrollView, View } from 'react-native';
+import { Alert, SafeAreaView, TVFocusGuideView, View } from 'react-native';
 
 function Home() {
-	useBackHandler(() => {});
+	useBackHandler(() => {
+		Alert.alert('Exit', 'Are you sure you want to exit?', [
+			{
+				text: 'Cancel',
+				style: 'cancel',
+			},
+			{
+				text: 'Exit',
+				style: 'destructive',
+				onPress: () => {
+					// Handle exit logic here, e.g., close the app or navigate to a different screen
+					// For now, we will just log it
+					console.log('Exiting the app');
+				},
+			},
+		]);
+		return true; // Prevent default back behavior
+	});
 
 	return (
 		<SafeAreaView style={{ flex: 1 }}>
 			{/* Menu */}
 			<Menu />
 
-			<ScrollView style={{ backgroundColor: Colors.dark.background }}>
-				<View style={{ backgroundColor: Colors.dark.background, marginTop: 32, marginLeft: 100, paddingHorizontal: 24 }}>
+			<View style={{ paddingLeft: 100, flex: 1, backgroundColor: Colors.dark.background }}>
+				<TVFocusGuideView style={{ flex: 1 }} trapFocusRight trapFocusUp>
 					<Banner />
-
+				</TVFocusGuideView>
+				<TVFocusGuideView>
 					<VideoList />
-				</View>
-			</ScrollView>
+				</TVFocusGuideView>
+			</View>
 		</SafeAreaView>
 	);
 }

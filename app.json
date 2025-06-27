@@ -30,7 +30,8 @@
 		"ios": {
 			"splash": {
 				"image": "./assets/images/splash.png"
-			}
+			},
+			"bundleIdentifier": "com.x3la2ooh.ThamaniyahTv"
 		},
 		"web": {
 			"bundler": "metro",

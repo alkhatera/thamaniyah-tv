@@ -6,7 +6,7 @@ function Banner() {
 
 	const isFocused = focusedComponent.name === 'banner';
 
-	useTVEventHandler((event: any) => {
+	useTVEventHandler((event) => {
 		const { eventType, eventKeyAction } = event;
 
 		if (eventType !== 'focus' && eventType !== 'blur' && focusedComponent.name === 'banner') {

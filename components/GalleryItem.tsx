@@ -1,4 +1,5 @@
 import { useFocusContext } from '@/ts/contexts/FocusContext';
+import { useMemo } from 'react';
 import { Image, Text, View } from 'react-native';
 
 interface GalleryItemProps {
@@ -10,7 +11,7 @@ interface GalleryItemProps {
 function GalleryItem({ title, image, index }: GalleryItemProps) {
 	const { focusedComponent } = useFocusContext();
 
-	const isFocused = focusedComponent.name === 'moviesList' && focusedComponent.focusedIndex === index;
+	const isFocused = useMemo(() => focusedComponent.name === 'moviesList' && focusedComponent.focusedIndex === index, [focusedComponent]);
 
 	return (
 		<View
@@ -25,10 +26,6 @@ function GalleryItem({ title, image, index }: GalleryItemProps) {
 				alignItems: 'center',
 				borderRadius: 10,
 			}}
-			onFocus={() => {
-				console.log(`Focused on item: ${title}`);
-			}}
-			hasTVPreferredFocus={false}
 		>
 			<Image source={{ uri: image }} style={{ width: '100%', height: '100%' }} resizeMode="cover" />
 			<Text style={{ position: 'absolute', bottom: 10, color: 'white', left: 10 }}>{title}</Text>
