@@ -1,17 +1,27 @@
 import { useFocusContext } from '@/ts/contexts/FocusContext';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useMemo } from 'react';
-import { TVFocusGuideView, useTVEventHandler, View } from 'react-native';
-import Animated, { useAnimatedStyle, withSpring, withTiming } from 'react-native-reanimated';
+import { Image, Text, TVFocusGuideView, useTVEventHandler } from 'react-native';
+import Animated, { useAnimatedStyle, withSpring } from 'react-native-reanimated';
 import MenuItem from './MenuItem';
 
+// image
+import ProfilePicture from '@/assets/images/profile.avif';
+import HomeIcon from '@/assets/images/home-icon.png';
+import FavoritesIcon from '@/assets/images/favorites-icon.png';
+import SettingsIcon from '@/assets/images/settings-icon.png';
+
+// animation
 const AnimatedLinearGradient = Animated.createAnimatedComponent(LinearGradient);
 const AnimatedTVFocusGuideView = Animated.createAnimatedComponent(TVFocusGuideView);
 
+const MENU_ITEMS = [
+	{ title: 'Home', icon: HomeIcon, path: '/' },
+	{ title: 'Favorites', icon: FavoritesIcon, path: '/favorites' },
+	{ title: 'Settings', icon: SettingsIcon, path: '' },
+];
+
 function Menu() {
 	const { focusedComponent, changeFocus } = useFocusContext();
-
-	const menuItems = useMemo(() => [...Array(5)], []);
 
 	useTVEventHandler((event: any) => {
 		const { eventType, eventKeyAction } = event;
@@ -22,7 +32,7 @@ function Menu() {
 				changeFocus('banner', 0);
 			}
 
-			if (eventType === 'down' && focusedComponent.focusedIndex < menuItems.length - 1) {
+			if (eventType === 'down' && focusedComponent.focusedIndex < MENU_ITEMS.length - 1) {
 				changeFocus('menu', focusedComponent.focusedIndex + 1);
 			}
 
@@ -80,22 +90,34 @@ function Menu() {
 		>
 			<AnimatedTVFocusGuideView autoFocus trapFocusRight style={[{ flex: 1 }, contentWidth]}>
 				{/* Profile */}
-				<View
+				<Image
+					source={ProfilePicture} // Replace with your image URL or local asset
 					style={{
-						backgroundColor: '#808080',
 						width: 50,
 						height: 50,
 						top: 30,
 						left: '50%',
 						transform: [{ translateX: -25 }],
 						borderRadius: 30,
-						marginBottom: 110,
+						marginBottom: 50,
 					}}
 				/>
 
+				{/* Profile Name */}
+				<Text
+					style={{
+						color: 'white',
+						fontSize: 16,
+						textAlign: 'center',
+						marginBottom: 110,
+					}}
+				>
+					John Doe
+				</Text>
+
 				{/* Menu Item */}
-				{menuItems.map((_, index) => (
-					<MenuItem key={index} index={index} />
+				{MENU_ITEMS.map((menuItem, index) => (
+					<MenuItem key={index} title={menuItem.title} icon={menuItem.icon} path={menuItem.path} index={index} />
 				))}
 			</AnimatedTVFocusGuideView>
 		</AnimatedLinearGradient>

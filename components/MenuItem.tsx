@@ -1,34 +1,61 @@
+import { Colors } from '@/constants/Colors';
 import { useFocusContext } from '@/ts/contexts/FocusContext';
+import { useRouter } from 'expo-router';
 import { useMemo } from 'react';
-import { Pressable } from 'react-native';
+import { Image, Pressable, Text, View } from 'react-native';
+import Animated, { useAnimatedStyle, withTiming } from 'react-native-reanimated';
 
 interface MenuItemProps {
 	index: number;
+	title: string;
+	icon?: string;
+	path?: string;
 }
 
-function MenuItem({ index }: MenuItemProps) {
+function MenuItem({ index, title, icon, path }: MenuItemProps) {
 	const { focusedComponent } = useFocusContext();
+	const router = useRouter();
 
-	const isFocused = useMemo(() => focusedComponent?.name === 'menu' && focusedComponent.focusedIndex === index, [focusedComponent]);
+	const isMenuOpen = useMemo(() => focusedComponent?.name === 'menu', [focusedComponent]);
+	const isFocused = useMemo(() => isMenuOpen && focusedComponent.focusedIndex === index, [focusedComponent, isMenuOpen, index]);
+
+	const animatedStyle = useAnimatedStyle(() => {
+		return {
+			opacity: withTiming(isMenuOpen ? 1 : 0, { duration: isMenuOpen ? 650 : 100 }),
+			width: withTiming(isMenuOpen ? 100 : 0, { duration: 250 }),
+		};
+	});
 
 	return (
 		<Pressable
-			onPress={() => console.log('Menu Item Pressed')}
-			style={({ pressed, focused, hovered }) => {
-				return {
-					backgroundColor: '#808080',
-					height: 30,
-					marginBottom: 25,
-					marginHorizontal: 25,
-					borderRadius: 5,
-					borderWidth: isFocused ? 2 : 1,
-					borderColor: isFocused ? 'blue' : 'gray',
-				};
-			}}
+			onPress={() => path && router.navigate(path)}
+			style={({ focused }) => ({
+				height: 30,
+				marginBottom: 25,
+				marginHorizontal: 25,
+				borderRadius: 5,
+				flexDirection: 'row',
+				alignItems: 'center',
+				justifyContent: 'center',
+				backgroundColor: isFocused ? 'rgba(255,255,255,0.1)' : 'transparent',
+			})}
 		>
-			{({ focused, hovered, pressed }) => {
-				return <></>;
-			}}
+			{/* Added an image instead of icons because icons keep stealing focus */}
+			<View style={{ width: 25, height: 25 }}>
+				<Image source={icon} style={{ width: '100%', height: '100%', borderRadius: 13 }} resizeMode="cover" />
+			</View>
+
+			<Animated.View style={[animatedStyle, { marginLeft: 10 }]}>
+				<Text
+					style={{
+						color: isFocused ? Colors.dark.link : Colors.dark.text,
+						fontSize: 16,
+						fontWeight: 'bold',
+					}}
+				>
+					{title}
+				</Text>
+			</Animated.View>
 		</Pressable>
 	);
 }
