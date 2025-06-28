@@ -32,7 +32,7 @@ function GalleryItem({ title, image, index, style, listName = 'moviesList' }: Ga
 				{
 					width: 200,
 					height: 100,
-					marginRight: 20,
+					marginLeft: 20,
 					marginVertical: 10,
 					borderWidth: isFocused ? 2 : 1,
 					borderColor: isFocused ? Colors.dark.link : Colors.dark.icon,

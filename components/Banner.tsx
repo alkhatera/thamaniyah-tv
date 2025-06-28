@@ -55,15 +55,15 @@ function Banner() {
 				}
 			}
 
-			if (eventType === 'left' && focusedComponent.focusedIndex > 0) {
+			if (eventType === 'right' && focusedComponent.focusedIndex > 0) {
 				changeFocus('banner', focusedComponent.focusedIndex - 1);
-			} else if (eventType === 'left' && focusedComponent.focusedIndex === 0) {
+			} else if (eventType === 'right' && focusedComponent.focusedIndex === 0) {
 				changeFocus('menu');
 			}
 
-			if (eventType === 'right' && focusedComponent.focusedIndex < 1) {
+			if (eventType === 'left' && focusedComponent.focusedIndex < 1) {
 				changeFocus('banner', focusedComponent.focusedIndex + 1);
-			} else if (eventType === 'right' && focusedComponent.focusedIndex === 1) {
+			} else if (eventType === 'left' && focusedComponent.focusedIndex === 1) {
 				changeFocus('moviesList');
 			}
 
@@ -115,6 +115,7 @@ function Banner() {
 					transform: [{ translateX: -75 }, { translateY: -35 }], // total width is 150px, offset by half
 					flexDirection: 'row',
 					gap: 20, // add spacing between buttons (or use margin)
+					direction: 'rtl',
 				}}
 			>
 				{/* Play Button */}

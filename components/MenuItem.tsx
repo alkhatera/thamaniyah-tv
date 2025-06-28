@@ -2,8 +2,9 @@ import { Colors } from '@/constants/Colors';
 import { useFocusContext } from '@/ts/contexts/FocusContext';
 import { useRouter } from 'expo-router';
 import { useMemo } from 'react';
-import { Image, Pressable, Text, View } from 'react-native';
+import { Image, Pressable, View } from 'react-native';
 import Animated, { useAnimatedStyle, withTiming } from 'react-native-reanimated';
+import { RegularText } from './StyledText';
 
 interface MenuItemProps {
 	index: number;
@@ -38,6 +39,7 @@ function MenuItem({ index, title, icon, path }: MenuItemProps) {
 				alignItems: 'center',
 				justifyContent: 'center',
 				backgroundColor: isFocused ? 'rgba(255,255,255,0.1)' : 'transparent',
+				direction: 'rtl',
 			})}
 		>
 			{/* Added an image instead of icons because icons keep stealing focus */}
@@ -45,16 +47,15 @@ function MenuItem({ index, title, icon, path }: MenuItemProps) {
 				<Image source={icon} style={{ width: '100%', height: '100%', borderRadius: 13 }} resizeMode="cover" />
 			</View>
 
-			<Animated.View style={[animatedStyle, { marginLeft: 10 }]}>
-				<Text
+			<Animated.View style={[animatedStyle, { marginRight: 10 }]}>
+				<RegularText
 					style={{
 						color: isFocused ? Colors.dark.link : Colors.dark.text,
 						fontSize: 16,
-						fontWeight: 'bold',
 					}}
 				>
 					{title}
-				</Text>
+				</RegularText>
 			</Animated.View>
 		</Pressable>
 	);

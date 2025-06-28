@@ -21,16 +21,16 @@ function VideoList() {
 				changeFocus('banner', 0);
 			}
 
-			// Go to next item when right button is pressed
-			if (eventType === 'right' && focusedComponent.focusedIndex < videos.length - 1) {
+			// Go to next item when left button is pressed
+			if (eventType === 'left' && focusedComponent.focusedIndex < videos.length - 1) {
 				changeFocus('moviesList', focusedComponent.focusedIndex + 1);
 			}
 
-			// Go to previous item when left button is pressed
+			// Go to previous item when right button is pressed
 			// Or, open the menu if focused on the first item
-			if (eventType === 'left' && focusedComponent.focusedIndex > 0) {
+			if (eventType === 'right' && focusedComponent.focusedIndex > 0) {
 				changeFocus('moviesList', focusedComponent.focusedIndex - 1);
-			} else if (eventType === 'left' && focusedComponent.focusedIndex === 0) {
+			} else if (eventType === 'right' && focusedComponent.focusedIndex === 0) {
 				changeFocus('menu');
 			}
 
@@ -59,7 +59,8 @@ function VideoList() {
 	return (
 		<FlatList
 			ref={flatListRef}
-			data={videos || []}
+			data={[...videos].reverse()} // Reverse data for RTL
+			inverted
 			horizontal
 			keyExtractor={(item, index) => index.toString()}
 			renderItem={({ item, index }: { item: PixabayVideo; index: number }) => (
@@ -72,7 +73,8 @@ function VideoList() {
 				console.warn('Index out of range');
 			}}
 			scrollEnabled={false}
-			ListHeaderComponent={<View style={{ width: 150 }} />}
+			ListHeaderComponent={<View style={{ width: 100 }} />}
+			initialScrollIndex={videos.length > 0 ? 0 : undefined}
 		/>
 	);
 }

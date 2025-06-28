@@ -2,10 +2,11 @@ import useDebouncedTVEventHandler from '@/hooks/useDebouncedTVEventHandler';
 import { useFocusContext } from '@/ts/contexts/FocusContext';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
-import { HWEvent, Image, Text, TVFocusGuideView } from 'react-native';
+import { useRouteInfo } from 'expo-router/build/hooks';
+import { HWEvent, Image, TVFocusGuideView } from 'react-native';
 import Animated, { useAnimatedStyle, withSpring } from 'react-native-reanimated';
 import MenuItem from './MenuItem';
-import { useRouteInfo } from 'expo-router/build/hooks';
+import { RegularText } from './StyledText';
 
 // image
 import FavoritesIcon from '@/assets/images/favorites-icon.png';
@@ -18,9 +19,9 @@ const AnimatedLinearGradient = Animated.createAnimatedComponent(LinearGradient);
 const AnimatedTVFocusGuideView = Animated.createAnimatedComponent(TVFocusGuideView);
 
 const MENU_ITEMS = [
-	{ title: 'Home', icon: HomeIcon, path: '/' },
-	{ title: 'Favorites', icon: FavoritesIcon, path: '/favorites' },
-	{ title: 'Settings', icon: SettingsIcon, path: '' },
+	{ title: 'الرئيسية', icon: HomeIcon, path: '/' },
+	{ title: 'المفضلة', icon: FavoritesIcon, path: '/favorites' },
+	{ title: 'الإعدادات', icon: SettingsIcon, path: '' },
 ];
 
 interface MenuProps {
@@ -44,7 +45,7 @@ function Menu({ firstFocus }: MenuProps) {
 			}
 
 			// Close the menu when the back button is pressed
-			if (eventType === 'right') {
+			if (eventType === 'left') {
 				// @ts-ignore
 				changeFocus(firstFocus ?? 'banner', 0);
 			}
@@ -91,21 +92,22 @@ function Menu({ firstFocus }: MenuProps) {
 				'transparent',
 			]}
 			locations={[0, 200 / 300, 220 / 300, 240 / 300, 260 / 300, 280 / 300, 1]}
-			start={{ x: 0, y: 0 }} // Top
-			end={{ x: 1, y: 0 }}
+			end={{ x: 0, y: 0 }} // Top
+			start={{ x: 1, y: 0 }}
 			style={[
 				{
 					height: '100%',
 					position: 'absolute',
 					top: 0,
-					left: 0,
+					right: 0,
 					bottom: 0,
 					zIndex: 1,
+					direction: 'rtl',
 				},
 				animatedWidth,
 			]}
 		>
-			<AnimatedTVFocusGuideView autoFocus trapFocusRight style={[{ flex: 1 }, contentWidth]}>
+			<AnimatedTVFocusGuideView autoFocus trapFocusRight style={[{ flex: 1, direction: 'rtl', alignItems: 'center' }, contentWidth]}>
 				{/* Profile */}
 				<Image
 					source={ProfilePicture} // Replace with your image URL or local asset
@@ -113,24 +115,23 @@ function Menu({ firstFocus }: MenuProps) {
 						width: 50,
 						height: 50,
 						top: 30,
-						left: '50%',
-						transform: [{ translateX: -25 }],
 						borderRadius: 30,
 						marginBottom: 50,
 					}}
 				/>
 
 				{/* Profile Name */}
-				<Text
+				<RegularText
 					style={{
 						color: 'white',
 						fontSize: 16,
 						textAlign: 'center',
 						marginBottom: 110,
+						minWidth: 100,
 					}}
 				>
-					John Doe
-				</Text>
+					علاء الخاطر
+				</RegularText>
 
 				{/* Menu Item */}
 				{MENU_ITEMS.map((menuItem, index) => (

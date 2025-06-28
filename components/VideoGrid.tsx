@@ -5,6 +5,7 @@ import { generateVideoTitle } from '@/ts/utils';
 import { useRef } from 'react';
 import { FlatList, Text, View, useWindowDimensions } from 'react-native';
 import GalleryItem from './GalleryItem';
+import { RegularText } from './StyledText';
 
 interface VideoGridProps {
 	videos: PixabayVideo[];
@@ -23,7 +24,7 @@ function VideoGrid({ videos }: VideoGridProps) {
 		const { eventType, eventKeyAction } = event;
 
 		if (eventType !== 'focus' && eventType !== 'blur' && focusedComponent.name === 'favorites') {
-			if (eventType === 'left') {
+			if (eventType === 'right') {
 				if (focusedComponent.focusedIndex > 0) {
 					changeFocus('favorites', focusedComponent.focusedIndex - 1);
 				} else {
@@ -31,7 +32,7 @@ function VideoGrid({ videos }: VideoGridProps) {
 				}
 			}
 
-			if (eventType === 'right') {
+			if (eventType === 'left') {
 				if (focusedComponent.focusedIndex < videos.length - 1) {
 					changeFocus('favorites', focusedComponent.focusedIndex + 1);
 				}
@@ -73,9 +74,10 @@ function VideoGrid({ videos }: VideoGridProps) {
 			}}
 			ListHeaderComponent={
 				<View>
-					<Text style={{ color: 'white', fontSize: 24, marginBottom: 10 }}>Favorites</Text>
+					<RegularText style={{ color: 'white', fontSize: 24, marginBottom: 10 }}>المفضلة</RegularText>
 				</View>
 			}
+			style={{ direction: 'rtl' }}
 		/>
 	);
 }

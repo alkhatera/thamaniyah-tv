@@ -1,3 +1,4 @@
+import { RegularText } from '@/components/StyledText';
 import { Colors } from '@/constants/Colors';
 import useBackHandler from '@/hooks/useBackHandler';
 import useDebouncedTVEventHandler from '@/hooks/useDebouncedTVEventHandler';
@@ -78,7 +79,7 @@ function VideoPlayer() {
 						}}
 					>
 						<Entypo name="video" size={64} color="white" style={{ marginBottom: 16 }} />
-						<Text style={{ color: 'white', fontSize: 24, marginBottom: 12 }}>Error playing video</Text>
+						<RegularText style={{ color: 'white', fontSize: 24, marginBottom: 12 }}>خطأ في تحميل الفيديو</RegularText>
 						<Text style={{ color: 'white', marginBottom: 12 }}>{playerError}</Text>
 						<Animated.View
 							style={[

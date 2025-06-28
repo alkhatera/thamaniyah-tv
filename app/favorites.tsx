@@ -40,7 +40,7 @@ function Favorites() {
 			<Menu firstFocus="favorites" />
 
 			<View style={{ flex: 1, backgroundColor: Colors.dark.background }}>
-				<TVFocusGuideView style={{ paddingLeft: 100, flex: 1 }}>
+				<TVFocusGuideView style={{ paddingRight: 100, flex: 1 }}>
 					<VideoGrid videos={videoList} />
 				</TVFocusGuideView>
 			</View>

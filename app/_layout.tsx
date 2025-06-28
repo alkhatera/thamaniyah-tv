@@ -24,6 +24,7 @@ export default function RootLayout() {
 	const colorScheme = useColorScheme();
 	const [loaded, error] = useFonts({
 		SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+		HacenEgypt: require('../assets/fonts/HacenEgypt.ttf'),
 	});
 
 	useEffect(() => {
