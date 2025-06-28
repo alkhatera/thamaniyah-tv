@@ -2,19 +2,21 @@ import { Colors } from '@/constants/Colors';
 import { useFocusContext } from '@/ts/contexts/FocusContext';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useMemo } from 'react';
-import { Image, Text } from 'react-native';
+import { Image, StyleProp, Text, ViewStyle } from 'react-native';
 import Animated, { Easing, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 
 interface GalleryItemProps {
 	title: string;
 	image: string;
 	index: number;
+	style?: StyleProp<ViewStyle>;
+	listName?: string;
 }
 
-function GalleryItem({ title, image, index }: GalleryItemProps) {
+function GalleryItem({ title, image, index, style, listName = 'moviesList' }: GalleryItemProps) {
 	const { focusedComponent } = useFocusContext();
 
-	const isFocused = useMemo(() => focusedComponent.name === 'moviesList' && focusedComponent.focusedIndex === index, [focusedComponent]);
+	const isFocused = useMemo(() => focusedComponent.name === listName && focusedComponent.focusedIndex === index, [focusedComponent]);
 
 	const animatedStyle = useAnimatedStyle(() => {
 		// when the item is focused, apply a scale transform
@@ -39,6 +41,7 @@ function GalleryItem({ title, image, index }: GalleryItemProps) {
 					borderRadius: 10,
 					overflow: 'hidden',
 				},
+				style,
 				animatedStyle,
 			]}
 		>

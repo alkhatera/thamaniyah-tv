@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { HWEvent, useTVEventHandler } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
 
-function useDebouncedTVEventHandler(callback: (event: HWEvent) => void, delay = 200) {
+function useDebouncedTVEventHandler(callback: (event: HWEvent) => void, delay = 1000) {
 	const isFocused = useIsFocused();
 
 	const lastCall = useRef(0);

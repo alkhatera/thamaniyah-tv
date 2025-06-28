@@ -1,15 +1,16 @@
+import useDebouncedTVEventHandler from '@/hooks/useDebouncedTVEventHandler';
 import { useFocusContext } from '@/ts/contexts/FocusContext';
 import { LinearGradient } from 'expo-linear-gradient';
-import { HWEvent, Image, Text, TVFocusGuideView, useTVEventHandler } from 'react-native';
+import { useRouter } from 'expo-router';
+import { HWEvent, Image, Text, TVFocusGuideView } from 'react-native';
 import Animated, { useAnimatedStyle, withSpring } from 'react-native-reanimated';
 import MenuItem from './MenuItem';
-import useDebouncedTVEventHandler from '@/hooks/useDebouncedTVEventHandler';
-import { useRouter } from 'expo-router';
+import { useRouteInfo } from 'expo-router/build/hooks';
 
 // image
-import ProfilePicture from '@/assets/images/profile.avif';
-import HomeIcon from '@/assets/images/home-icon.png';
 import FavoritesIcon from '@/assets/images/favorites-icon.png';
+import HomeIcon from '@/assets/images/home-icon.png';
+import ProfilePicture from '@/assets/images/profile.avif';
 import SettingsIcon from '@/assets/images/settings-icon.png';
 
 // animation
@@ -22,8 +23,13 @@ const MENU_ITEMS = [
 	{ title: 'Settings', icon: SettingsIcon, path: '' },
 ];
 
-function Menu() {
+interface MenuProps {
+	firstFocus?: string;
+}
+
+function Menu({ firstFocus }: MenuProps) {
 	const router = useRouter();
+	const route = useRouteInfo();
 	const { focusedComponent, changeFocus } = useFocusContext();
 
 	useDebouncedTVEventHandler((event: HWEvent) => {
@@ -32,14 +38,15 @@ function Menu() {
 		if (eventType !== 'focus' && eventType !== 'blur' && focusedComponent?.name === 'menu') {
 			if (eventType === 'select') {
 				const currentItem = MENU_ITEMS[focusedComponent.focusedIndex];
-				if (currentItem?.path) {
-					router.navigate(currentItem.path);
+				if (currentItem?.path && route.pathname !== currentItem.path) {
+					router.push(currentItem.path);
 				}
 			}
 
 			// Close the menu when the back button is pressed
 			if (eventType === 'right') {
-				changeFocus('banner', 0);
+				// @ts-ignore
+				changeFocus(firstFocus ?? 'banner', 0);
 			}
 
 			if (eventType === 'down' && focusedComponent.focusedIndex < MENU_ITEMS.length - 1) {
