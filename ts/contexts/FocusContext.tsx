@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useMemo, useState } from 'react';
 
-type ComponentName = 'menu' | 'moviesList' | 'favorites' | 'banner';
+type ComponentName = 'menu' | 'moviesList' | 'favorites' | 'banner' | 'videoplayer';
 
 type FocusComponent = {
 	name: ComponentName;
@@ -34,6 +34,7 @@ function FocusProvider({ children }: FocusProviderProps) {
 		{ name: 'moviesList', isFocused: true, focusedIndex: 0 },
 		{ name: 'favorites', isFocused: false, focusedIndex: 0 },
 		{ name: 'banner', isFocused: false, focusedIndex: 0 },
+		{ name: 'videoplayer', isFocused: false, focusedIndex: 0 },
 	]);
 
 	const changeFocus = useCallback((component: ComponentName, index?: number) => {

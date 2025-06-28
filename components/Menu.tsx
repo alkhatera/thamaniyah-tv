@@ -3,7 +3,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { HWEvent, Image, Text, TVFocusGuideView, useTVEventHandler } from 'react-native';
 import Animated, { useAnimatedStyle, withSpring } from 'react-native-reanimated';
 import MenuItem from './MenuItem';
-import useDebouncedTVEventHandler from '@/hooks/useDebouncedTvEventHandler';
+import useDebouncedTVEventHandler from '@/hooks/useDebouncedTVEventHandler';
 
 // image
 import ProfilePicture from '@/assets/images/profile.avif';

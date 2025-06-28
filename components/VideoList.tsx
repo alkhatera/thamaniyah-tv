@@ -2,9 +2,9 @@ import { PixabayVideo } from '@/ts/ types';
 import { useFocusContext } from '@/ts/contexts/FocusContext';
 import useVideosStore from '@/ts/zustand/store';
 import { useEffect, useRef } from 'react';
-import { FlatList, HWEvent, useTVEventHandler, View } from 'react-native';
+import { FlatList, HWEvent, View } from 'react-native';
 import GalleryItem from './GalleryItem';
-import useDebouncedTVEventHandler from '@/hooks/useDebouncedTvEventHandler';
+import useDebouncedTVEventHandler from '@/hooks/useDebouncedTVEventHandler';
 import { generateVideoTitle } from '@/ts/utils';
 
 function VideoList() {
@@ -17,6 +17,10 @@ function VideoList() {
 		const { eventType, eventKeyAction } = event;
 
 		if (eventType !== 'focus' && eventType !== 'blur' && focusedComponent.name === 'moviesList') {
+			if (eventType === 'select') {
+				changeFocus('banner', 0);
+			}
+
 			// Go to next item when right button is pressed
 			if (eventType === 'right' && focusedComponent.focusedIndex < videos.length - 1) {
 				changeFocus('moviesList', focusedComponent.focusedIndex + 1);
