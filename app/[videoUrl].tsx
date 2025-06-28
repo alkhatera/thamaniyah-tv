@@ -2,6 +2,7 @@ import { Colors } from '@/constants/Colors';
 import useBackHandler from '@/hooks/useBackHandler';
 import useDebouncedTVEventHandler from '@/hooks/useDebouncedTVEventHandler';
 import { useFocusContext } from '@/ts/contexts/FocusContext';
+import useVideosProgress from '@/ts/zustand/useVideosProgress';
 import Entypo from '@expo/vector-icons/Entypo';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useEventListener } from 'expo';
@@ -13,6 +14,7 @@ import Animated, { useAnimatedStyle, useSharedValue, withSequence, withSpring, w
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 function VideoPlayer() {
+	const { getVideoPosition, setVideoPosition } = useVideosProgress();
 	const { focusedComponent, changeFocus } = useFocusContext();
 	const params = useLocalSearchParams();
 	const scale = useSharedValue(1);
@@ -29,6 +31,7 @@ function VideoPlayer() {
 
 	const player = useVideoPlayer(params.videoUrl, (player) => {
 		player.loop = true;
+		player.seekBy(getVideoPosition(params.videoUrl as string) || 0);
 		player.play();
 	});
 
@@ -55,6 +58,10 @@ function VideoPlayer() {
 
 	useBackHandler(() => {
 		changeFocus('banner');
+		if (player) {
+			player.pause();
+			setVideoPosition(params.videoUrl as string, player.currentTime);
+		}
 	});
 
 	return (

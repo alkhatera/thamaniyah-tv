@@ -1,4 +1,4 @@
-import useVideosStore from '@/ts/zustand/store';
+import useVideosStore from '@/ts/zustand/useVideosStore';
 import { useQuery } from '@tanstack/react-query';
 
 const PIXABAY_API_KEY = '51088801-a67cbc92f4d579c6c9e77d685';

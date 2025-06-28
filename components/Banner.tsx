@@ -1,7 +1,7 @@
 import { Colors } from '@/constants/Colors';
 import useDebouncedTVEventHandler from '@/hooks/useDebouncedTVEventHandler';
 import { useFocusContext } from '@/ts/contexts/FocusContext';
-import useVideosStore from '@/ts/zustand/store';
+import useVideosStore from '@/ts/zustand/useVideosStore';
 import FeatherIcons from '@expo/vector-icons/Feather';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';

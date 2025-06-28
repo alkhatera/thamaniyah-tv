@@ -1,6 +1,6 @@
 import { PixabayVideo } from '@/ts/ types';
 import { useFocusContext } from '@/ts/contexts/FocusContext';
-import useVideosStore from '@/ts/zustand/store';
+import useVideosStore from '@/ts/zustand/useVideosStore';
 import { useEffect, useRef } from 'react';
 import { FlatList, HWEvent, View } from 'react-native';
 import GalleryItem from './GalleryItem';

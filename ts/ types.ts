@@ -49,3 +49,8 @@ export interface PixabayVideoFormat {
 	size: number;
 	thumbnail: string;
 }
+
+export interface VideoProgress {
+	url: string;
+	seconds: number;
+}
