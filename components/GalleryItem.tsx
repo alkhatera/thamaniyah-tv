@@ -1,5 +1,6 @@
 import { Colors } from '@/constants/Colors';
 import { useFocusContext } from '@/ts/contexts/FocusContext';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useMemo } from 'react';
 import { Image, Text } from 'react-native';
 import Animated, { Easing, useAnimatedStyle, withTiming } from 'react-native-reanimated';
@@ -36,12 +37,26 @@ function GalleryItem({ title, image, index }: GalleryItemProps) {
 					justifyContent: 'center',
 					alignItems: 'center',
 					borderRadius: 10,
+					overflow: 'hidden',
 				},
 				animatedStyle,
 			]}
 		>
 			<Image source={{ uri: image }} style={{ width: '100%', height: '100%', borderRadius: 10, overflow: 'hidden' }} resizeMode="cover" />
-			<Text style={{ position: 'absolute', bottom: 10, color: 'white', left: 10 }}>{title}</Text>
+			<LinearGradient
+				colors={['transparent', 'rgba(0,0,0,0.2)', 'rgba(0,0,0,0.6)', Colors.dark.background]}
+				locations={[0, 0.2, 0.55, 1]}
+				style={{
+					position: 'absolute',
+					left: 0,
+					right: 0,
+					bottom: 0,
+					height: 50, // more space for a gentler fade
+				}}
+			/>
+			<Text style={{ position: 'absolute', bottom: 10, color: 'white', left: 10, right: 10, fontSize: 12 }} numberOfLines={2}>
+				{title}
+			</Text>
 		</Animated.View>
 	);
 }

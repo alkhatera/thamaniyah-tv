@@ -5,6 +5,7 @@ import { useEffect, useRef } from 'react';
 import { FlatList, HWEvent, useTVEventHandler, View } from 'react-native';
 import GalleryItem from './GalleryItem';
 import useDebouncedTVEventHandler from '@/hooks/useDebouncedTvEventHandler';
+import { generateVideoTitle } from '@/ts/utils';
 
 function VideoList() {
 	const { videos } = useVideosStore();
@@ -16,8 +17,6 @@ function VideoList() {
 		const { eventType, eventKeyAction } = event;
 
 		if (eventType !== 'focus' && eventType !== 'blur' && focusedComponent.name === 'moviesList') {
-			console.log('Event:', eventType, 'Focused Component:', focusedComponent.name, 'Focused Index:', focusedComponent.focusedIndex);
-
 			// Go to next item when right button is pressed
 			if (eventType === 'right' && focusedComponent.focusedIndex < videos.length - 1) {
 				changeFocus('moviesList', focusedComponent.focusedIndex + 1);
@@ -60,7 +59,7 @@ function VideoList() {
 			horizontal
 			keyExtractor={(item, index) => index.toString()}
 			renderItem={({ item, index }: { item: PixabayVideo; index: number }) => (
-				<GalleryItem title={item.type} image={item?.videos?.small?.thumbnail} index={index} />
+				<GalleryItem title={generateVideoTitle(item?.tags, item?.duration)} image={item?.videos?.small?.thumbnail} index={index} />
 			)}
 			showsHorizontalScrollIndicator={false}
 			contentContainerStyle={{ paddingHorizontal: 10 }}
