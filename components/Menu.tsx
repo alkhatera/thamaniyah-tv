@@ -4,6 +4,7 @@ import { HWEvent, Image, Text, TVFocusGuideView, useTVEventHandler } from 'react
 import Animated, { useAnimatedStyle, withSpring } from 'react-native-reanimated';
 import MenuItem from './MenuItem';
 import useDebouncedTVEventHandler from '@/hooks/useDebouncedTVEventHandler';
+import { useRouter } from 'expo-router';
 
 // image
 import ProfilePicture from '@/assets/images/profile.avif';
@@ -22,12 +23,20 @@ const MENU_ITEMS = [
 ];
 
 function Menu() {
+	const router = useRouter();
 	const { focusedComponent, changeFocus } = useFocusContext();
 
 	useDebouncedTVEventHandler((event: HWEvent) => {
 		const { eventType, eventKeyAction } = event;
 
 		if (eventType !== 'focus' && eventType !== 'blur' && focusedComponent?.name === 'menu') {
+			if (eventType === 'select') {
+				const currentItem = MENU_ITEMS[focusedComponent.focusedIndex];
+				if (currentItem?.path) {
+					router.navigate(currentItem.path);
+				}
+			}
+
 			// Close the menu when the back button is pressed
 			if (eventType === 'right') {
 				changeFocus('banner', 0);
