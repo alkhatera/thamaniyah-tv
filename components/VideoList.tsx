@@ -60,7 +60,7 @@ function VideoList() {
 	return (
 		<FlatList
 			ref={flatListRef}
-			data={[...videos].reverse()} // Reverse data for RTL
+			data={[...videos]}
 			inverted
 			horizontal
 			keyExtractor={(item, index) => index.toString()}
