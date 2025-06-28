@@ -35,7 +35,7 @@ function VideoList() {
 			}
 
 			if (eventType === 'up') {
-				changeFocus('banner', 0);
+				changeFocus('banner');
 			}
 		}
 	});
