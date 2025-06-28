@@ -11,6 +11,7 @@ type FocusComponent = {
 type FocusContextValue = {
 	focusedComponent: FocusComponent;
 	changeFocus: (component: ComponentName, index?: number) => void;
+	components?: FocusComponent[];
 };
 
 const FocusContext = createContext<FocusContextValue | undefined>(undefined);
@@ -55,6 +56,7 @@ function FocusProvider({ children }: FocusProviderProps) {
 		() => ({
 			focusedComponent: components.find((comp) => comp.isFocused) || components[0],
 			changeFocus,
+			components: components,
 		}),
 		[components]
 	);

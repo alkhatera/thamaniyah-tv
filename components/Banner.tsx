@@ -4,16 +4,19 @@ import { useFocusContext } from '@/ts/contexts/FocusContext';
 import useVideosStore from '@/ts/zustand/store';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useMemo } from 'react';
-import { Image, useTVEventHandler, View } from 'react-native';
+import { Image, View } from 'react-native';
 
 function Banner() {
-	const { focusedComponent, changeFocus } = useFocusContext();
+	const { focusedComponent, components, changeFocus } = useFocusContext();
 	const { videos } = useVideosStore();
 
 	const isFocused = useMemo(() => focusedComponent.name === 'banner', [focusedComponent.name]);
 	const selectedVideo = useMemo(
-		() => (focusedComponent.name === 'moviesList' ? videos[focusedComponent.focusedIndex] : videos[0]),
-		[focusedComponent, videos]
+		() =>
+			components?.find((component) => component.name === 'moviesList')
+				? videos[components?.find((component) => component.name === 'moviesList')?.focusedIndex || 0]
+				: videos[0],
+		[videos, components]
 	);
 
 	useDebouncedTVEventHandler((event) => {
@@ -33,8 +36,12 @@ function Banner() {
 	});
 
 	return (
-		<View style={{ width: '100%', height: '100%', borderWidth: isFocused ? 2 : 0, borderColor: isFocused ? 'blue' : 'gray' }}>
-			<Image source={{ uri: selectedVideo?.videos?.medium?.thumbnail }} style={{ width: '100%', height: '100%' }} resizeMode="cover" />
+		<View style={{ width: '100%', height: '100%', borderWidth: 2, borderRadius: 10, borderColor: isFocused ? Colors.dark.link : 'transparent' }}>
+			<Image
+				source={{ uri: selectedVideo?.videos?.medium?.thumbnail }}
+				style={{ width: '100%', height: '100%', borderRadius: 10, overflow: 'hidden' }}
+				resizeMode="cover"
+			/>
 			<LinearGradient
 				colors={[
 					'transparent',
