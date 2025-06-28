@@ -1,44 +1,12 @@
+import { PixabayVideo } from '@/ts/ types';
 import { useFocusContext } from '@/ts/contexts/FocusContext';
+import useVideosStore from '@/ts/zustand/store';
 import { useEffect, useRef } from 'react';
 import { FlatList, useTVEventHandler, View } from 'react-native';
 import GalleryItem from './GalleryItem';
 
-const items = [
-	{
-		name: 'Item 1',
-		image: 'https://placehold.co/200x100/png',
-	},
-	{
-		name: 'Item 2',
-		image: 'https://placehold.co/200x100/png',
-	},
-	{
-		name: 'Item 3',
-		image: 'https://placehold.co/200x100/png',
-	},
-	{
-		name: 'Item 4',
-		image: 'https://placehold.co/200x100/png',
-	},
-	{
-		name: 'Item 5',
-		image: 'https://placehold.co/200x100/png',
-	},
-	{
-		name: 'Item 6',
-		image: 'https://placehold.co/200x100/png',
-	},
-	{
-		name: 'Item 7',
-		image: 'https://placehold.co/200x100/png',
-	},
-	{
-		name: 'Item 8',
-		image: 'https://placehold.co/200x100/png',
-	},
-];
-
 function VideoList() {
+	const { videos } = useVideosStore();
 	const flatListRef = useRef<FlatList>(null);
 
 	const { focusedComponent, changeFocus } = useFocusContext();
@@ -48,7 +16,7 @@ function VideoList() {
 
 		if (eventType !== 'focus' && eventType !== 'blur' && focusedComponent.name === 'moviesList') {
 			// Go to next item when right button is pressed
-			if (eventType === 'right' && focusedComponent.focusedIndex < items.length - 1) {
+			if (eventType === 'right' && focusedComponent.focusedIndex < videos.length - 1) {
 				changeFocus('moviesList', focusedComponent.focusedIndex + 1);
 			}
 
@@ -80,10 +48,12 @@ function VideoList() {
 	return (
 		<FlatList
 			ref={flatListRef}
-			data={items}
+			data={videos || []}
 			horizontal
 			keyExtractor={(item, index) => index.toString()}
-			renderItem={({ item, index }) => <GalleryItem title={item.name} image={item.image} index={index} />}
+			renderItem={({ item, index }: { item: PixabayVideo; index: number }) => (
+				<GalleryItem title={item.type} image={item?.videos?.small?.thumbnail} index={index} />
+			)}
 			showsHorizontalScrollIndicator={false}
 			contentContainerStyle={{ paddingHorizontal: 10 }}
 			onScrollToIndexFailed={() => {

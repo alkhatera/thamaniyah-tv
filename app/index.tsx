@@ -2,10 +2,13 @@ import Banner from '@/components/Banner';
 import Menu from '@/components/Menu';
 import VideoList from '@/components/VideoList';
 import { Colors } from '@/constants/Colors';
+import useFetchVideos from '@/hooks/api/useFetchVideos';
 import useBackHandler from '@/hooks/useBackHandler';
 import { Alert, SafeAreaView, TVFocusGuideView, View } from 'react-native';
 
 function Home() {
+	useFetchVideos();
+
 	useBackHandler(() => {
 		Alert.alert('Exit', 'Are you sure you want to exit?', [
 			{

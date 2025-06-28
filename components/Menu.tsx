@@ -1,6 +1,6 @@
 import { useFocusContext } from '@/ts/contexts/FocusContext';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Image, Text, TVFocusGuideView, useTVEventHandler } from 'react-native';
+import { HWEvent, Image, Text, TVFocusGuideView, useTVEventHandler } from 'react-native';
 import Animated, { useAnimatedStyle, withSpring } from 'react-native-reanimated';
 import MenuItem from './MenuItem';
 
@@ -23,7 +23,7 @@ const MENU_ITEMS = [
 function Menu() {
 	const { focusedComponent, changeFocus } = useFocusContext();
 
-	useTVEventHandler((event: any) => {
+	useTVEventHandler((event: HWEvent) => {
 		const { eventType, eventKeyAction } = event;
 
 		if (eventType !== 'focus' && eventType !== 'blur' && focusedComponent?.name === 'menu') {

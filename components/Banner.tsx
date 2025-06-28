@@ -1,12 +1,19 @@
-import { useFocusContext } from '@/ts/contexts/FocusContext';
-import { Image, useTVEventHandler, View } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import { Colors } from '@/constants/Colors';
+import { useFocusContext } from '@/ts/contexts/FocusContext';
+import useVideosStore from '@/ts/zustand/store';
+import { LinearGradient } from 'expo-linear-gradient';
+import { useMemo } from 'react';
+import { Image, useTVEventHandler, View } from 'react-native';
 
 function Banner() {
 	const { focusedComponent, changeFocus } = useFocusContext();
+	const { videos } = useVideosStore();
 
-	const isFocused = focusedComponent.name === 'banner';
+	const isFocused = useMemo(() => focusedComponent.name === 'banner', [focusedComponent.name]);
+	const selectedVideo = useMemo(
+		() => (focusedComponent.name === 'moviesList' ? videos[focusedComponent.focusedIndex] : videos[0]),
+		[focusedComponent, videos]
+	);
 
 	useTVEventHandler((event) => {
 		const { eventType, eventKeyAction } = event;
@@ -26,7 +33,7 @@ function Banner() {
 
 	return (
 		<View style={{ width: '100%', height: '100%', borderWidth: isFocused ? 2 : 0, borderColor: isFocused ? 'blue' : 'gray' }}>
-			<Image source={{ uri: 'https://placehold.co/400/png' }} style={{ width: '100%', height: '100%' }} resizeMode="cover" />
+			<Image source={{ uri: selectedVideo?.videos?.medium?.thumbnail }} style={{ width: '100%', height: '100%' }} resizeMode="cover" />
 			<LinearGradient
 				colors={[
 					'transparent',
