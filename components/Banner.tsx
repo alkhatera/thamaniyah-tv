@@ -8,7 +8,7 @@ import Octicons from '@expo/vector-icons/Octicons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import { useCallback, useMemo } from 'react';
-import { Image, TouchableOpacity, View } from 'react-native';
+import { Image, View } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withSequence, withSpring, withTiming } from 'react-native-reanimated';
 
 function Banner() {
@@ -112,9 +112,9 @@ function Banner() {
 					position: 'absolute',
 					top: '50%',
 					left: '50%',
-					transform: [{ translateX: -75 }, { translateY: -35 }], // total width is 150px, offset by half
+					transform: [{ translateX: -120 }, { translateY: -35 }],
 					flexDirection: 'row',
-					gap: 20, // add spacing between buttons (or use margin)
+					gap: 20,
 					direction: 'rtl',
 				}}
 			>
