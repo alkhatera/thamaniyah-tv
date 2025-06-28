@@ -34,7 +34,7 @@ function Home() {
 			<Menu />
 
 			<View style={{ flex: 1, backgroundColor: Colors.dark.background }}>
-				<TVFocusGuideView style={{ paddingLeft: 100, flex: 1 }} trapFocusRight trapFocusUp>
+				<TVFocusGuideView style={{ flex: 1 }} trapFocusRight trapFocusUp>
 					<Banner />
 				</TVFocusGuideView>
 				<TVFocusGuideView>

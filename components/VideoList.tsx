@@ -72,7 +72,7 @@ function VideoList() {
 				console.warn('Index out of range');
 			}}
 			scrollEnabled={false}
-			ListHeaderComponent={<View style={{ width: 100 }} />}
+			ListHeaderComponent={<View style={{ width: 150 }} />}
 		/>
 	);
 }

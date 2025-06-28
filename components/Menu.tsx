@@ -61,7 +61,7 @@ function Menu({ firstFocus }: MenuProps) {
 
 	const animatedWidth = useAnimatedStyle(() => {
 		return {
-			width: withSpring(focusedComponent?.name === 'menu' ? 300 : 100, {
+			width: withSpring(focusedComponent?.name === 'menu' ? 300 : 150, {
 				damping: 15,
 				stiffness: 120,
 				mass: 0.8,
