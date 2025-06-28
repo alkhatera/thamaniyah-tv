@@ -2,8 +2,9 @@ import { PixabayVideo } from '@/ts/ types';
 import { useFocusContext } from '@/ts/contexts/FocusContext';
 import useVideosStore from '@/ts/zustand/store';
 import { useEffect, useRef } from 'react';
-import { FlatList, useTVEventHandler, View } from 'react-native';
+import { FlatList, HWEvent, useTVEventHandler, View } from 'react-native';
 import GalleryItem from './GalleryItem';
+import useDebouncedTVEventHandler from '@/hooks/useDebouncedTvEventHandler';
 
 function VideoList() {
 	const { videos } = useVideosStore();
@@ -11,10 +12,12 @@ function VideoList() {
 
 	const { focusedComponent, changeFocus } = useFocusContext();
 
-	useTVEventHandler((event: any) => {
+	useDebouncedTVEventHandler((event: HWEvent) => {
 		const { eventType, eventKeyAction } = event;
 
 		if (eventType !== 'focus' && eventType !== 'blur' && focusedComponent.name === 'moviesList') {
+			console.log('Event:', eventType, 'Focused Component:', focusedComponent.name, 'Focused Index:', focusedComponent.focusedIndex);
+
 			// Go to next item when right button is pressed
 			if (eventType === 'right' && focusedComponent.focusedIndex < videos.length - 1) {
 				changeFocus('moviesList', focusedComponent.focusedIndex + 1);
@@ -36,7 +39,12 @@ function VideoList() {
 
 	// Auto-scroll to focused item
 	useEffect(() => {
-		if (focusedComponent.name === 'moviesList' && flatListRef.current) {
+		if (
+			focusedComponent.name === 'moviesList' &&
+			flatListRef.current &&
+			focusedComponent.focusedIndex >= 0 &&
+			focusedComponent.focusedIndex < videos.length
+		) {
 			flatListRef.current?.scrollToIndex({
 				index: focusedComponent.focusedIndex,
 				viewPosition: 0.5,

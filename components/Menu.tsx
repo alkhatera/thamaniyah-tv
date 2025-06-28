@@ -3,6 +3,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { HWEvent, Image, Text, TVFocusGuideView, useTVEventHandler } from 'react-native';
 import Animated, { useAnimatedStyle, withSpring } from 'react-native-reanimated';
 import MenuItem from './MenuItem';
+import useDebouncedTVEventHandler from '@/hooks/useDebouncedTvEventHandler';
 
 // image
 import ProfilePicture from '@/assets/images/profile.avif';
@@ -23,7 +24,7 @@ const MENU_ITEMS = [
 function Menu() {
 	const { focusedComponent, changeFocus } = useFocusContext();
 
-	useTVEventHandler((event: HWEvent) => {
+	useDebouncedTVEventHandler((event: HWEvent) => {
 		const { eventType, eventKeyAction } = event;
 
 		if (eventType !== 'focus' && eventType !== 'blur' && focusedComponent?.name === 'menu') {

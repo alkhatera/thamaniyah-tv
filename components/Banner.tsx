@@ -1,4 +1,5 @@
 import { Colors } from '@/constants/Colors';
+import useDebouncedTVEventHandler from '@/hooks/useDebouncedTvEventHandler';
 import { useFocusContext } from '@/ts/contexts/FocusContext';
 import useVideosStore from '@/ts/zustand/store';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -15,7 +16,7 @@ function Banner() {
 		[focusedComponent, videos]
 	);
 
-	useTVEventHandler((event) => {
+	useDebouncedTVEventHandler((event) => {
 		const { eventType, eventKeyAction } = event;
 
 		if (eventType !== 'focus' && eventType !== 'blur' && focusedComponent.name === 'banner') {
