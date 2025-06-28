@@ -1,6 +1,6 @@
 import { useFocusContext } from '@/ts/contexts/FocusContext';
 import { useEffect, useRef } from 'react';
-import { FlatList, useTVEventHandler } from 'react-native';
+import { FlatList, useTVEventHandler, View } from 'react-native';
 import GalleryItem from './GalleryItem';
 
 const items = [
@@ -90,7 +90,8 @@ function VideoList() {
 				// Handle the case where the index is out of range
 				console.warn('Index out of range');
 			}}
-			scrollEnabled={false} // Optional: disable native scroll gestures
+			scrollEnabled={false}
+			ListHeaderComponent={<View style={{ width: 100 }} />}
 		/>
 	);
 }
