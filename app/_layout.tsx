@@ -4,10 +4,12 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import { configureReanimatedLogger, ReanimatedLogLevel } from 'react-native-reanimated';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import FocusProvider from '@/ts/contexts/FocusContext';
 import { Stack } from 'expo-router';
+
+const queryClient = new QueryClient();
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -38,15 +40,17 @@ export default function RootLayout() {
 	}
 
 	return (
-		<ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-			<GestureHandlerRootView style={{ flex: 1 }}>
-				<FocusProvider>
-					<Stack>
-						<Stack.Screen name="index" options={{ headerShown: false }} />
-						<Stack.Screen name="favorites" options={{ headerShown: false }} />
-					</Stack>
-				</FocusProvider>
-			</GestureHandlerRootView>
-		</ThemeProvider>
+		<QueryClientProvider client={queryClient}>
+			<ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+				<GestureHandlerRootView style={{ flex: 1 }}>
+					<FocusProvider>
+						<Stack>
+							<Stack.Screen name="index" options={{ headerShown: false }} />
+							<Stack.Screen name="favorites" options={{ headerShown: false }} />
+						</Stack>
+					</FocusProvider>
+				</GestureHandlerRootView>
+			</ThemeProvider>
+		</QueryClientProvider>
 	);
 }
