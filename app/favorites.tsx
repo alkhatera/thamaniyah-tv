@@ -16,13 +16,13 @@ function Favorites() {
 	}, [videos, favoriteVideos]);
 
 	useBackHandler(() => {
-		Alert.alert('Exit', 'Are you sure you want to exit?', [
+		Alert.alert('الخروج من التطبيق', 'هل آنت متآكد من خروجك من التطبيق؟', [
 			{
-				text: 'Cancel',
+				text: 'لا',
 				style: 'cancel',
 			},
 			{
-				text: 'Exit',
+				text: 'نعم',
 				style: 'destructive',
 				onPress: () => {
 					// Handle exit logic here, e.g., close the app or navigate to a different screen
