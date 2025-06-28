@@ -1,13 +1,12 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import FocusProvider from '@/ts/contexts/FocusContext';
+import { DarkTheme, ThemeProvider } from '@react-navigation/native';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useFonts } from 'expo-font';
+import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
-import { configureReanimatedLogger, ReanimatedLogLevel } from 'react-native-reanimated';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { useColorScheme } from '@/hooks/useColorScheme';
-import FocusProvider from '@/ts/contexts/FocusContext';
-import { Stack } from 'expo-router';
+import { configureReanimatedLogger, ReanimatedLogLevel } from 'react-native-reanimated';
 
 const queryClient = new QueryClient();
 
@@ -21,7 +20,6 @@ configureReanimatedLogger({
 });
 
 export default function RootLayout() {
-	const colorScheme = useColorScheme();
 	const [loaded, error] = useFonts({
 		SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
 		HacenEgypt: require('../assets/fonts/HacenEgypt.ttf'),
@@ -42,7 +40,7 @@ export default function RootLayout() {
 
 	return (
 		<QueryClientProvider client={queryClient}>
-			<ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+			<ThemeProvider value={DarkTheme}>
 				<GestureHandlerRootView style={{ flex: 1 }}>
 					<FocusProvider>
 						<Stack>

@@ -15,6 +15,7 @@ function Favorites() {
 		return videos.filter((video) => favoriteVideos.has(`${video.id}`));
 	}, [videos, favoriteVideos]);
 
+	// Handle back button press
 	useBackHandler(() => {
 		Alert.alert('الخروج من التطبيق', 'هل آنت متآكد من خروجك من التطبيق؟', [
 			{

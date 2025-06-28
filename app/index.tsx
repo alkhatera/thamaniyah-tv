@@ -7,8 +7,11 @@ import useBackHandler from '@/hooks/useBackHandler';
 import { Alert, SafeAreaView, TVFocusGuideView, View } from 'react-native';
 
 function Home() {
+	// Fetch videos from the API
+	// This hook will handle fetching videos and updating Zustand state
 	useFetchVideos();
 
+	// Handle back button press
 	useBackHandler(() => {
 		Alert.alert('الخروج من التطبيق', 'هل آنت متآكد من خروجك من التطبيق؟', [
 			{
@@ -33,10 +36,14 @@ function Home() {
 			{/* Menu */}
 			<Menu />
 
+			{/* Main content area */}
 			<View style={{ flex: 1, backgroundColor: Colors.dark.background }}>
+				{/* Banner */}
 				<TVFocusGuideView style={{ flex: 1 }} trapFocusRight trapFocusUp>
 					<Banner />
 				</TVFocusGuideView>
+
+				{/* Video List */}
 				<TVFocusGuideView>
 					<VideoList />
 				</TVFocusGuideView>

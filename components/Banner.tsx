@@ -8,7 +8,7 @@ import Octicons from '@expo/vector-icons/Octicons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import { useCallback, useMemo } from 'react';
-import { Image, View } from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withSequence, withSpring, withTiming } from 'react-native-reanimated';
 
 function Banner() {
@@ -36,6 +36,7 @@ function Banner() {
 		[videos, components]
 	);
 
+	// Handle TV remote events
 	useDebouncedTVEventHandler((event) => {
 		const { eventType, eventKeyAction } = event;
 
@@ -81,12 +82,8 @@ function Banner() {
 	);
 
 	return (
-		<View style={{ width: '100%', height: '100%', borderRadius: 10 }}>
-			<Image
-				source={{ uri: selectedVideo?.videos?.medium?.thumbnail }}
-				style={{ width: '100%', height: '100%', borderRadius: 10, overflow: 'hidden' }}
-				resizeMode="cover"
-			/>
+		<View style={styles.container}>
+			<Image source={{ uri: selectedVideo?.videos?.medium?.thumbnail }} style={styles.img} resizeMode="cover" />
 			<LinearGradient
 				colors={[
 					'transparent',
@@ -98,26 +95,11 @@ function Banner() {
 					Colors.dark.background,
 				]}
 				locations={[0, 0.2, 0.35, 0.55, 0.75, 0.9, 1]}
-				style={{
-					position: 'absolute',
-					left: 0,
-					right: 0,
-					bottom: 0,
-					height: 200, // more space for a gentler fade
-				}}
+				style={styles.gradient}
 			/>
 
-			<View
-				style={{
-					position: 'absolute',
-					top: '50%',
-					left: '50%',
-					transform: [{ translateX: -120 }, { translateY: -35 }],
-					flexDirection: 'row',
-					gap: 20,
-					direction: 'rtl',
-				}}
-			>
+			{/* Buttons */}
+			<View style={styles.buttons}>
 				{/* Play Button */}
 				<Animated.View
 					style={[
@@ -168,5 +150,26 @@ function Banner() {
 		</View>
 	);
 }
+
+const styles = StyleSheet.create({
+	container: { width: '100%', height: '100%', borderRadius: 10 },
+	img: { width: '100%', height: '100%', borderRadius: 10, overflow: 'hidden' },
+	gradient: {
+		position: 'absolute',
+		left: 0,
+		right: 0,
+		bottom: 0,
+		height: 200, // more space for a gentler fade
+	},
+	buttons: {
+		position: 'absolute',
+		top: '50%',
+		left: '50%',
+		transform: [{ translateX: -120 }, { translateY: -35 }],
+		flexDirection: 'row',
+		gap: 20,
+		direction: 'rtl',
+	},
+});
 
 export default Banner;

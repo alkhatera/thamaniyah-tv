@@ -36,6 +36,7 @@ function VideoPlayer() {
 		player.play();
 	});
 
+	// Video player event listeners
 	useEventListener(player, 'statusChange', ({ status, error }) => {
 		setPlayerStatus(status);
 		setPlayerError(error?.message || null);
@@ -47,6 +48,7 @@ function VideoPlayer() {
 		setRetryKey((prev) => prev + 1);
 	};
 
+	// Handle TV remote events
 	useDebouncedTVEventHandler((event) => {
 		const { eventType, eventKeyAction } = event;
 
@@ -57,6 +59,7 @@ function VideoPlayer() {
 		}
 	});
 
+	// Handle back button press
 	useBackHandler(() => {
 		changeFocus('banner');
 		if (player) {

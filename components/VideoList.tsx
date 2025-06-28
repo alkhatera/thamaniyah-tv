@@ -13,6 +13,7 @@ function VideoList() {
 
 	const { focusedComponent, changeFocus } = useFocusContext();
 
+	// Handle TV remote events
 	useDebouncedTVEventHandler((event: HWEvent) => {
 		const { eventType, eventKeyAction } = event;
 
